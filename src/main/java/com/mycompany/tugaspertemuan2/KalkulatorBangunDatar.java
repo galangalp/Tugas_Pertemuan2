@@ -16,6 +16,25 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
     public KalkulatorBangunDatar() {
         initComponents();
     }
+    
+    private String comboDiagonalValue () {
+        return jComboBox1.getSelectedItem().toString();
+    }
+    
+    private String comboRumusValue () {
+        return jComboBox2.getSelectedItem().toString();
+    }
+    
+    String persegiPanjang = "Persegi Panjang";
+    String persegi = "Persegi";
+    String lingkaran = "Lingkaran";
+    
+    String keliling = "Keliling";
+    String luas = "Luas";
+    
+    Boolean isPersegi, isPersegiPanjang, isLingkaran, isKeliling, isLuas;
+    
+    Double nilai1, nilai2, hasil;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,6 +58,8 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txthasil = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -51,14 +72,14 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
 
         jLabel3.setText("Pilih Rumus");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Persegi", "Persegi Panjang", "Lingkaran" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Satu", "Persegi", "Persegi Panjang", "Lingkaran" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Luas", "Keliling" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Satu", "Luas", "Keliling" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -76,6 +97,15 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
         jLabel5.setText("Hasil");
 
         jButton1.setText("Hitung");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText(" ");
+
+        jLabel7.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,7 +130,11 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
                             .addComponent(txtfield1)
                             .addComponent(txtfield2)
                             .addComponent(txthasil))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
                         .addComponent(jButton1)
                         .addGap(45, 45, 45))))
         );
@@ -122,12 +156,15 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jButton1)))
                 .addGap(18, 18, 18)
-                .addComponent(txtfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -151,6 +188,49 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        isPersegi = persegi.equals(comboDiagonalValue());
+        isPersegiPanjang = persegiPanjang.equals(comboDiagonalValue());
+        isLingkaran = lingkaran.equals(comboDiagonalValue());
+        
+        if (isPersegi) {
+            jLabel6.setText("Sisi");
+            jLabel7.setText(" ");
+            
+            txtfield1.setVisible(true);
+            txtfield2.setVisible(false);
+            
+            txtfield1.setText("");
+            txtfield2.setText("");
+        } else if (isPersegiPanjang) {
+            jLabel6.setText("Panjang");
+            jLabel7.setText("Lebar");
+            
+            txtfield1.setVisible(true);
+            txtfield2.setVisible(true);
+            
+            txtfield1.setText("");
+            txtfield2.setText("");
+        } else if (isLingkaran) {
+            jLabel6.setText("Jari-jari");
+            jLabel7.setText(" ");
+            
+            txtfield1.setVisible(true);
+            txtfield2.setVisible(false);
+            
+            txtfield1.setText("");
+            txtfield2.setText("");
+        } else {
+            jLabel6.setText(" ");
+            jLabel7.setText(" ");
+            
+            txtfield1.setVisible(false);
+            txtfield2.setVisible(false);
+            
+            txtfield1.setText("");
+            txtfield2.setText("");
+        }
+        
+        txthasil.setText(" ");
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void txtfield1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfield1ActionPerformed
@@ -159,7 +239,56 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
+        txthasil.setText(" ");
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        isPersegi = persegi.equals(comboDiagonalValue());
+        isPersegiPanjang = persegiPanjang.equals(comboDiagonalValue());
+        isLingkaran = lingkaran.equals(comboDiagonalValue());
+        
+        isKeliling = keliling.equals(comboRumusValue());
+        isLuas = luas.equals(comboRumusValue());
+        
+        if (isPersegi) {
+            nilai1 = Double.parseDouble(txtfield1.getText());
+            
+            if (isKeliling) {
+                hasil = nilai1 * 4;
+                txthasil.setText(String.valueOf(hasil));
+            } else if (isLuas) {
+                hasil = nilai1 * nilai1;
+                txthasil.setText(String.valueOf(hasil));
+            }
+            
+        } else if (isPersegiPanjang) {
+            nilai1 = Double.parseDouble(txtfield1.getText());
+            nilai2 = Double.parseDouble(txtfield2.getText());
+                
+            if (isKeliling) {
+                hasil = 2 * (nilai1 + nilai2);
+                txthasil.setText(String.valueOf(hasil));
+            } else if (isLuas) {
+                hasil = nilai1 * nilai2;
+                txthasil.setText(String.valueOf(hasil));
+            }
+            
+            
+        } else if (isLingkaran) {
+            nilai1 = Double.parseDouble(txtfield1.getText());
+            
+            if (isKeliling) {
+                hasil = 3.14 * nilai1 * nilai1;
+                txthasil.setText(String.valueOf(hasil));
+            } else if (isLuas) {
+                hasil = 3.14 * (nilai1 * 2);
+                txthasil.setText(String.valueOf(hasil));
+            }
+            
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,6 +334,8 @@ public class KalkulatorBangunDatar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtfield1;
